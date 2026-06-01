@@ -1,5 +1,5 @@
 import { DEFAULT_AGENT_MAX_TOOL_ROUNDS, DEFAULT_STREAM_PARTIAL_IMAGES, type ApiProfile, type AppSettings, type ResponsesApiResponse, type ResponsesOutputItem, type TaskParams } from '../types'
-import { buildApiUrl, readClientDevProxyConfig, shouldUseApiProxy } from './devProxy'
+import { buildApiUrl, createApiProxyHeaders, readClientDevProxyConfig, shouldUseApiProxy } from './devProxy'
 import { getApiErrorMessage, MIME_MAP, normalizeBase64Image, pickActualParams } from './imageApiShared'
 
 export interface AgentApiMessage {
@@ -637,7 +637,10 @@ export async function callAgentResponsesApi(opts: {
 
     const response = await fetch(buildApiUrl(profile.baseUrl, 'responses', proxyConfig, useApiProxy), {
       method: 'POST',
-      headers: createHeaders(profile),
+      headers: {
+        ...createHeaders(profile),
+        ...createApiProxyHeaders(profile.baseUrl, useApiProxy),
+      },
       cache: 'no-store',
       body: JSON.stringify(body),
       signal: controller.signal,
@@ -692,7 +695,10 @@ export async function callAgentConversationTitleApi(opts: {
 
     const response = await fetch(buildApiUrl(profile.baseUrl, 'responses', proxyConfig, useApiProxy), {
       method: 'POST',
-      headers: createHeaders(profile),
+      headers: {
+        ...createHeaders(profile),
+        ...createApiProxyHeaders(profile.baseUrl, useApiProxy),
+      },
       cache: 'no-store',
       body: JSON.stringify({
         model: profile.model || settings.model,
@@ -809,7 +815,10 @@ export async function callBatchImageSingle(opts: {
 
     const response = await fetch(buildApiUrl(profile.baseUrl, 'responses', proxyConfig, useApiProxy), {
       method: 'POST',
-      headers: createHeaders(profile),
+      headers: {
+        ...createHeaders(profile),
+        ...createApiProxyHeaders(profile.baseUrl, useApiProxy),
+      },
       cache: 'no-store',
       body: JSON.stringify(body),
       signal: controller.signal,

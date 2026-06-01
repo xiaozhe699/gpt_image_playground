@@ -74,6 +74,13 @@ export function buildApiUrl(
   return normalizedBaseUrl ? `${normalizedBaseUrl}/${apiPath}` : `/${apiPath}`
 }
 
+export function createApiProxyHeaders(baseUrl: string, useApiProxy: boolean): Record<string, string> {
+  const normalizedBaseUrl = normalizeBaseUrl(baseUrl)
+  return useApiProxy && normalizedBaseUrl
+    ? { 'X-Api-Proxy-Target': normalizedBaseUrl }
+    : {}
+}
+
 export function resolveDevProxyConfig(input: unknown, isDev: boolean): DevProxyConfig | null {
   if (!isDev) return null
   return normalizeDevProxyConfig(input)

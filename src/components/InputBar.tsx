@@ -804,15 +804,15 @@ export default function InputBar() {
 
   const qualityOptions = isFalProvider
     ? [
-        { label: 'low', value: 'low' },
-        { label: 'medium', value: 'medium' },
-        { label: 'high', value: 'high' },
+        { label: '低', value: 'low' },
+        { label: '中', value: 'medium' },
+        { label: '高', value: 'high' },
       ]
     : [
-        { label: 'auto', value: 'auto' },
-        { label: 'low', value: 'low' },
-        { label: 'medium', value: 'medium' },
-        { label: 'high', value: 'high' },
+        { label: '自动', value: 'auto' },
+        { label: '低', value: 'low' },
+        { label: '中', value: 'medium' },
+        { label: '高', value: 'high' },
       ]
   const atImageLimit = inputImages.length >= API_MAX_IMAGES
   const uploadImageTooltipText = atImageLimit ? `参考图数量已达上限（${API_MAX_IMAGES} 张），无法继续添加` : '上传图片'
@@ -2030,8 +2030,8 @@ export default function InputBar() {
             if (!moderationDisabled) setParams({ moderation: val as any })
           }}
           options={[
-            { label: 'auto', value: 'auto' },
-            { label: 'low', value: 'low' },
+            { label: '自动', value: 'auto' },
+            { label: '宽松', value: 'low' },
           ]}
           disabled={moderationDisabled}
           className={moderationDisabled
