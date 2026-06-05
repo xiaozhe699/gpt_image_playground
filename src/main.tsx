@@ -7,6 +7,7 @@ import './index.css'
 import { installMobileViewportGuards } from './lib/viewport'
 
 installMobileViewportGuards()
+document.documentElement.dataset.deploymentRevision = '20260605-api-proxy'
 
 if ('serviceWorker' in navigator) {
   if (import.meta.env.PROD) {
