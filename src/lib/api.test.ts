@@ -588,6 +588,10 @@ describe('callImageApi', () => {
       '/api-proxy/images/generations',
       expect.objectContaining({ method: 'POST' }),
     )
+    const [, init] = fetchMock.mock.calls[0]
+    const body = JSON.parse(String((init as RequestInit).body))
+    expect(body.stream).toBeUndefined()
+    expect(body.partial_images).toBeUndefined()
   })
 
   it('does not add cache request headers that require extra CORS allow-list entries', async () => {
